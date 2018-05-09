@@ -22,8 +22,7 @@ shinyUI(fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-      tabsetPanel(type = "tabs",
-                  tabPanel("Books", tableOutput("books"))
-    ))
-  )
-))
+      tabsetPanel(type = "tabs", tabPanel("Books", tableOutput("books")),
+                  tabPanel("Word Cloud", plotOutput("wordcloud")))
+    )
+)))
