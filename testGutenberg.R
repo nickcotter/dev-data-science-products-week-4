@@ -9,7 +9,7 @@ author_id <- 7
 book_ids <- gutenberg_works(gutenberg_author_id == author_id)
 
 # limit to 5
-book_ids <- head(book_ids, 6)
+#book_ids <- head(book_ids, 6)
 
 gutenberg_books <- gutenberg_download(book_ids, meta_fields = "title")
 

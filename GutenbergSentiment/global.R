@@ -4,7 +4,7 @@ library(tidytext)
 library(tidyr)
 library(memoise)
 
-getTidyBooks <- function(bookIds) {
+getTidyBooks <- memoise(function(bookIds) {
   
   message(paste('downloading book ids', bookIds))
   
@@ -19,4 +19,4 @@ getTidyBooks <- function(bookIds) {
            ))) %>%
     ungroup() %>%
     unnest_tokens(word, text) 
-}
+})

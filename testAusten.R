@@ -16,9 +16,10 @@ jane_austen_sentiment <- tidy_books %>%
   inner_join(get_sentiments("bing")) %>%
   count(book, index = linenumber %/% 80, sentiment) %>%
   spread(sentiment, n, fill = 0) %>%
-  mutate(sentiment = positive - negative)
+  mutate(sentiment = positive - negative) %>%
+  mutate(scaled_index = scale(index, center=FALSE))
 
 
-ggplot(jane_austen_sentiment, aes(index, sentiment, fill = book)) +
+ggplot(jane_austen_sentiment, aes(scaled_index, sentiment, fill = book)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~book, ncol = 2, scales = "free_x")

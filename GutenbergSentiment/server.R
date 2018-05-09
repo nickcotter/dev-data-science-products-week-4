@@ -5,6 +5,8 @@ library(stringr)
 library(tidytext)
 library(tidyr)
 library(wordcloud)
+library(ggplot2)
+library(plotly)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -45,6 +47,21 @@ shinyServer(function(input, output) {
         anti_join(stop_words) %>%
         count(word) %>%
         with(wordcloud(word, n, max.words = 100))
+    }
+  })
+  
+  output$sentiment <- renderPlotly({
+    if (!is.null(bookValues$books) && nrow(bookValues$books) > 0) {
+      book_sentiment <- getTidyBooks(bookValues$books$gutenberg_id) %>%
+        inner_join(get_sentiments("bing")) %>%
+        count(title, index = linenumber %/% 80, sentiment) %>%
+        spread(sentiment, n, fill = 0) %>%
+        mutate(sentiment = positive - negative)
+      
+      book_sentiment %>% plot_ly(x = ~index, y = ~sentiment, color = ~title) %>% 
+        add_bars() %>% 
+        layout(barmode = "stack")
+    
     }
   })
 })
