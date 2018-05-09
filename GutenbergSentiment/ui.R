@@ -17,14 +17,13 @@ shinyUI(fluidPage(
         btnReset = icon("remove"), 
         width = "100%"
       ),
-      uiOutput("authorSelector"),
-      conditionalPanel(condition = "input.selectedAuthor != ''", 
-                       actionButton("analyseAuthor", "Analyse"))
+      uiOutput("authorSelector")
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
-    #   plotOutput("distPlot")
-    )
+      tabsetPanel(type = "tabs",
+                  tabPanel("Books", tableOutput("books"))
+    ))
   )
 ))

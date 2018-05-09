@@ -19,9 +19,14 @@ shinyServer(function(input, output) {
     }
   })
   
-  observeEvent(input$analyseAuthor, {
-    
-    message(input$selectedAuthor)
+  observeEvent(input$selectedAuthor, {
+    if(input$selectedAuthor != '') {
+      bookValues$books <- gutenberg_works(author == input$selectedAuthor)
+    }
+  })
+  
+  output$books <- renderTable({
+    bookValues$books[,'title']
   })
   
   output$authorSelector <- renderUI({
