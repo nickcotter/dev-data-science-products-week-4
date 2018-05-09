@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyWidgets)
 
 shinyUI(fluidPage(
   
@@ -8,7 +9,14 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-      textInput("searchTerms", "Author", placeholder = "author's name"),
+      searchInput(
+        inputId = "searchTerms", 
+        label = "Author:", 
+        placeholder = "A name", 
+        btnSearch = icon("search"), 
+        btnReset = icon("remove"), 
+        width = "100%"
+      ),
       uiOutput("bookSelector")
     ),
     

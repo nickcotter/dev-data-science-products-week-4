@@ -5,21 +5,25 @@ library(stringr)
 library(tidytext)
 library(tidyr)
 library(wordcloud)
-library(shinyWidgets)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   
-  books <- reactive({
-    gutenberg_works(str_detect(author, input$searchTerms)) 
+  bookValues <- reactiveValues()
+  
+  observeEvent(input$searchTerms, {
+    message(paste('search for',input$searchTerms))
+    bookValues$books <- gutenberg_works(str_detect(author, input$searchTerms))
+    message(paste('found', nrow(bookValues$books), 'books'))
   })
   
-#  observeEvent(input$searchButton, {
-#    books <- gutenberg_works(str_detect(author, input$searchTerms))   
-#  })
-  
   output$bookSelector <- renderUI({
-    selectInput("bookIds", "Books", books()$title, multiple=TRUE)
+    
+    message('rendering ui')
+    
+    selectInput("bookIds", "Books", c("flaps"), multiple=TRUE)
+    
+  #  selectInput("bookIds", "Books", bookValues$books$title, multiple=TRUE)
   })
     
   #output$distPlot <- renderPlot({
