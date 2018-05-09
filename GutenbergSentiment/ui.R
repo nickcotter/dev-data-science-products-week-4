@@ -11,13 +11,15 @@ shinyUI(fluidPage(
     sidebarPanel(
       searchInput(
         inputId = "searchTerms", 
-        label = "Author:", 
-        placeholder = "A name", 
+        label = "Search:", 
+        placeholder = "An author name", 
         btnSearch = icon("search"), 
         btnReset = icon("remove"), 
         width = "100%"
       ),
-      uiOutput("bookSelector")
+      uiOutput("authorSelector"),
+      conditionalPanel(condition = "input.selectedAuthor != ''", 
+                       actionButton("analyseAuthor", "Analyse"))
     ),
     
     # Show a plot of the generated distribution
