@@ -12,8 +12,10 @@ shinyServer(function(input, output) {
   bookValues <- reactiveValues()
   
   observeEvent(input$searchTerms, {
-    message(paste('search for',input$searchTerms))
-    bookValues$books <- gutenberg_works(str_detect(author, input$searchTerms))
+          message(paste('search for',input$searchTerms))
+          if(input$searchTerms != '') {
+                  bookValues$books <- gutenberg_works(str_detect(author, input$searchTerms))
+          }
     message(paste('found', nrow(bookValues$books), 'books'))
   })
   
@@ -21,9 +23,9 @@ shinyServer(function(input, output) {
     
     message('rendering ui')
     
-    selectInput("bookIds", "Books", c("flaps"), multiple=TRUE)
+  #  selectInput("bookIds", "Books", c("flaps"), multiple=TRUE)
     
-  #  selectInput("bookIds", "Books", bookValues$books$title, multiple=TRUE)
+    selectInput("bookIds", "Books", paste(bookValues$books$title, 'by ', bookValues$books$author), multiple=TRUE)
   })
     
   #output$distPlot <- renderPlot({
