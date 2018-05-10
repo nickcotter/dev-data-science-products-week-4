@@ -1,8 +1,13 @@
+library(shiny)
+library(shinyWidgets)
+library(wordcloud)
+library(plotly)
 library(dplyr)
 library(stringr)
 library(tidytext)
 library(tidyr)
 library(memoise)
+library(gutenbergr)
 
 getTidyBooks <- memoise(function(bookIds) {
   

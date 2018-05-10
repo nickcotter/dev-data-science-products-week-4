@@ -1,12 +1,3 @@
-library(shiny)
-library(gutenbergr)
-library(dplyr)
-library(stringr)
-#library(tidytext)
-library(tidyr)
-library(wordcloud)
-library(plotly)
-
 shinyServer(function(input, output) {
   authorValues <- reactiveValues()
   bookValues <- reactiveValues()
