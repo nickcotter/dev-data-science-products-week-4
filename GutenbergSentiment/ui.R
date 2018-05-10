@@ -9,13 +9,14 @@ shinyUI(fluidPage(
     sidebarPanel(
       searchInput(
         inputId = "searchTerms", 
-        label = "Search:", 
         placeholder = "An author name", 
         btnSearch = icon("search"), 
         btnReset = icon("remove"), 
         width = "100%"
       ),
-      uiOutput("authorSelector")
+      uiOutput("authorSelector"),
+      helpText("Enter a search term to find authors and select one to generate the word cloud and sentiment graph."),
+      helpText("Note: it may take some time to load if the author has written many books!")
     ),
     
     mainPanel(

@@ -2,7 +2,7 @@ library(shiny)
 library(gutenbergr)
 library(dplyr)
 library(stringr)
-library(tidytext)
+#library(tidytext)
 library(tidyr)
 library(wordcloud)
 library(plotly)
@@ -33,7 +33,7 @@ shinyServer(function(input, output) {
   output$authorSelector <- renderUI({
     selectInput(
       "selectedAuthor",
-      "Choose An Author",
+      "Analyse this author:",
       choices = authorValues$authors$author,
       multiple = FALSE
     )
