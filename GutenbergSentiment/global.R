@@ -6,10 +6,12 @@ library(memoise)
 
 getTidyBooks <- memoise(function(bookIds) {
   
-  message(paste('downloading book ids', bookIds))
+  incProgress(0.5, detail = "downloading")
   
   gutenberg_books <-
     gutenberg_download(bookIds, meta_fields = "title")
+  
+  incProgress(0.5, detail = "analysing")
   
   tidy_books <- gutenberg_books %>%
     group_by(title) %>%

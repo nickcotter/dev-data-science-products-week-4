@@ -40,7 +40,7 @@ shinyServer(function(input, output) {
   })
   
   wordcloudPlot <- eventReactive(input$selectedAuthor, {
-    withProgress(message = 'Progress indicators', {
+    withProgress(message = 'Loading Text', {
       getTidyBooks(bookValues$books$gutenberg_id) %>%
         anti_join(stop_words) %>%
         count(word) %>%
@@ -49,7 +49,7 @@ shinyServer(function(input, output) {
   })
   
   sentimentPlot <- eventReactive(input$selectedAuthor, {
-    withProgress(message = 'Progress indicators2', {
+    withProgress(message = 'Loading Text', {
       getTidyBooks(bookValues$books$gutenberg_id) %>%
         inner_join(get_sentiments("bing")) %>%
         count(title, index = linenumber %/% 80, sentiment) %>%
