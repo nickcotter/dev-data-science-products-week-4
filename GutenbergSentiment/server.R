@@ -19,7 +19,7 @@ shinyServer(function(input, output) {
   
   output$books <- renderTable({
     bookValues$books[, 'title']
-  })
+  }, colnames = FALSE)
   
   output$authorSelector <- renderUI({
     selectInput(
