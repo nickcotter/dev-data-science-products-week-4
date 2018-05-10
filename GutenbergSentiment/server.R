@@ -5,10 +5,8 @@ library(stringr)
 library(tidytext)
 library(tidyr)
 library(wordcloud)
-library(ggplot2)
 library(plotly)
 
-# Define server logic required to draw a histogram
 shinyServer(function(input, output) {
   authorValues <- reactiveValues()
   bookValues <- reactiveValues()
@@ -41,27 +39,35 @@ shinyServer(function(input, output) {
     )
   })
   
-  output$wordcloud <- renderPlot({
-    if (!is.null(bookValues$books) && nrow(bookValues$books) > 0) {
+  wordcloudPlot <- eventReactive(input$selectedAuthor, {
+    withProgress(message = 'Progress indicators', {
       getTidyBooks(bookValues$books$gutenberg_id) %>%
         anti_join(stop_words) %>%
         count(word) %>%
         with(wordcloud(word, n, max.words = 100))
-    }
+    })
   })
   
-  output$sentiment <- renderPlotly({
-    if (!is.null(bookValues$books) && nrow(bookValues$books) > 0) {
-      book_sentiment <- getTidyBooks(bookValues$books$gutenberg_id) %>%
+  sentimentPlot <- eventReactive(input$selectedAuthor, {
+    withProgress(message = 'Progress indicators2', {
+      getTidyBooks(bookValues$books$gutenberg_id) %>%
         inner_join(get_sentiments("bing")) %>%
         count(title, index = linenumber %/% 80, sentiment) %>%
         spread(sentiment, n, fill = 0) %>%
-        mutate(sentiment = positive - negative)
-      
-      book_sentiment %>% plot_ly(x = ~index, y = ~sentiment, color = ~title) %>% 
-        add_bars() %>% 
+        mutate(sentiment = positive - negative) %>%
+        plot_ly(x = ~ index,
+                y = ~ sentiment,
+                color = ~ title) %>%
+        add_bars() %>%
         layout(barmode = "stack")
-    
-    }
+    })
+  })
+  
+  output$wordcloud <- renderPlot({
+    wordcloudPlot()
+  })
+  
+  output$sentiment <- renderPlotly({
+    sentimentPlot()
   })
 })

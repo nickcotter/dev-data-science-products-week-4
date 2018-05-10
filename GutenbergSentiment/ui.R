@@ -3,10 +3,8 @@ library(shinyWidgets)
 
 shinyUI(fluidPage(
   
-  # Application title
   titlePanel("Gutenberg Sentiment Analyser"),
   
-  # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
       searchInput(
@@ -20,7 +18,6 @@ shinyUI(fluidPage(
       uiOutput("authorSelector")
     ),
     
-    # Show a plot of the generated distribution
     mainPanel(
       tabsetPanel(type = "tabs", tabPanel("Books", tableOutput("books")),
                   tabPanel("Word Cloud", plotOutput("wordcloud")),
