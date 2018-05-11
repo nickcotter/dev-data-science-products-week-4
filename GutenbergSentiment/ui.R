@@ -1,6 +1,6 @@
 shinyUI(fluidPage(
   
-  titlePanel("Gutenberg Sentiment Analyser"),
+  titlePanel("Gutenberg Sentiment Explorer"),
   
   sidebarLayout(
     sidebarPanel(
