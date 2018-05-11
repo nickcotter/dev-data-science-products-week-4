@@ -61,4 +61,9 @@ shinyServer(function(input, output) {
   output$sentiment <- renderPlotly({
     sentimentPlot()
   })
+  
+  url <- a("Github Repo", href="https://github.com/nickcotter/dev-data-science-products-week-4")
+  output$github <- renderUI({
+    tagList("Source:", url)
+  })
 })

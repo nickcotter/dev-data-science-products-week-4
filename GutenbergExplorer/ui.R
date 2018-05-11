@@ -13,7 +13,8 @@ shinyUI(fluidPage(
       ),
       uiOutput("authorSelector"),
       helpText("Enter a search term to find authors and select one to display their books, generate the word cloud and sentiment graph."),
-      helpText("Note: analysis may take some time to load if the author has written many books!")
+      helpText("Note: analysis may take some time to load if the author has written many books!"),
+      uiOutput("github")
     ),
     
     mainPanel(
